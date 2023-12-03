@@ -1,0 +1,20 @@
+data_dir: "{{ vector_data_dir }}"
+
+api:
+  enabled: true
+  address: "127.0.0.1:8686"
+
+sources:
+  var_logs:
+    type: "file"
+    include:
+      - "/var/log/*.log"
+    ignore_older: 86400          # 1 day
+
+sinks:
+  clickhouse:
+    inputs:
+      - "var_logs"
+    type: "clickhouse"
+    endpoint: "{{ vector_endpoint_clickhouse }}"
+    table: "{{ vector_endpoint_clickhouse_table }}"
