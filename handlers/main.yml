@@ -1,14 +1,16 @@
 ---
-- name: Restart vector
+- name: VECTOR | Restart vector
+  become: true
   ansible.builtin.systemd_service:
     name: vector
     state: restarted
     daemon_reload: true
     enabled: true
+  listen: restart vector
 
-- name: Reload vector
+- name: VECTOR | Reload vector
+  become: true
   ansible.builtin.systemd_service:
     name: vector
     state: reloaded
-    daemon_reload: true
-    enabled: true
+  listen: reload vector

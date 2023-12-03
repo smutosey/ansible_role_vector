@@ -1,27 +1,32 @@
 ---
 - name: VECTOR | Ensure group "vector" exists
+  become: true
   ansible.builtin.group:
     name: "{{ vector_group }}"
     state: present
 
 - name: VECTOR | Add the user 'vector' with a bash shell, appending the group 'vector' and groups for scraping
+  become: true
   ansible.builtin.user:
     name: "{{ vector_user }}"
     group: "{{ vector_group }}"
     groups: "{{ vector_groups | default('') }}"
     shell: /usr/sbin/nologin
-    createhome: no
-    append: True
+    createhome: true
+    append: true
 
-- name: VECTOR | Install the Vector rpm from a remote repo
+- name: VECTOR | Install Vector rpm from a remote repo
+  become: true
   ansible.builtin.yum:
     name: "https://yum.vector.dev/stable/vector-0/{{ ansible_architecture }}/vector-{{ vector_version }}-1.{{ ansible_architecture }}.rpm"
     state: present
-  when: ansible_os_family == RedHat
-  notify: restart service
+  notify: restart vector
+  when: ansible_pkg_mgr == yum
 
-- name: VECTOR | Install the Vector deb from a remote repo
+- name: VECTOR | Install Vector deb from a remote repo
+  become: true
   ansible.builtin.apt:
     deb: "https://apt.vector.dev/pool/v/ve/vector_{{ vector_version }}-1_{{ deb_architecture[ansible_architecture] }}.deb"
     state: present
-  when: ansible_os_family == Debian
+  notify: restart vector
+  when: ansible_pkg_mgr == apt

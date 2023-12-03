@@ -3,4 +3,4 @@
     src: vector.yaml.j2
     dest: /etc/vector/vector.yaml
     mode: '0755'
-  notify: Restart vector
+  notify: reload vector
