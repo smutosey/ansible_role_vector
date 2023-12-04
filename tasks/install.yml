@@ -21,7 +21,7 @@
     name: "https://yum.vector.dev/stable/vector-0/{{ ansible_architecture }}/vector-{{ vector_version }}-1.{{ ansible_architecture }}.rpm"
     state: present
   notify: restart vector
-  when: ansible_pkg_mgr == yum
+  when: ansible_pkg_mgr == "yum"
 
 - name: VECTOR | Install Vector deb from a remote repo
   become: true
@@ -29,4 +29,4 @@
     deb: "https://apt.vector.dev/pool/v/ve/vector_{{ vector_version }}-1_{{ deb_architecture[ansible_architecture] }}.deb"
     state: present
   notify: restart vector
-  when: ansible_pkg_mgr == apt
+  when: ansible_pkg_mgr == "apt"
