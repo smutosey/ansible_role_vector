@@ -1,11 +1,11 @@
 ---
-- name: VECTOR | Ensure group "vector" exists
+- name: INSTALL | Ensure group "vector" exists
   become: true
   ansible.builtin.group:
     name: "{{ vector_group }}"
     state: present
 
-- name: VECTOR | Add the user 'vector' with a bash shell, appending the group 'vector' and groups for scraping
+- name: INSTALL | Add the user 'vector' with a bash shell, appending the group 'vector' and groups for scraping
   become: true
   ansible.builtin.user:
     name: "{{ vector_user }}"
@@ -15,7 +15,7 @@
     createhome: true
     append: true
 
-- name: VECTOR | Install Vector rpm from a remote repo
+- name: INSTALL | Install Vector rpm from a remote repo
   become: true
   ansible.builtin.yum:
     name: "https://yum.vector.dev/stable/vector-0/{{ ansible_architecture }}/vector-{{ vector_version }}-1.{{ ansible_architecture }}.rpm"
@@ -23,7 +23,7 @@
   notify: restart vector
   when: ansible_pkg_mgr == "yum"
 
-- name: VECTOR | Install Vector deb from a remote repo
+- name: INSTALL | Install Vector deb from a remote repo
   become: true
   ansible.builtin.apt:
     deb: "https://apt.vector.dev/pool/v/ve/vector_{{ vector_version }}-1_{{ deb_architecture[ansible_architecture] }}.deb"

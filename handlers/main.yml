@@ -1,5 +1,5 @@
 ---
-- name: VECTOR | Restart vector
+- name: HANDLER | Restart vector
   become: true
   ansible.builtin.systemd_service:
     name: vector
@@ -8,7 +8,7 @@
     enabled: true
   listen: restart vector
 
-- name: VECTOR | Reload vector
+- name: HANDLER | Reload vector
   become: true
   ansible.builtin.systemd_service:
     name: vector

@@ -1,15 +1,10 @@
 ---
-- name: VECTOR | Install
+- name: Install
   ansible.builtin.include_tasks: install.yml
   tags:
     - vector_install
 
-- name: VECTOR | Configure
+- name: Configure
   ansible.builtin.include_tasks: config.yml
   tags:
     - vector_configure
-
-# - name: VECTOR | Service
-#   include_tasks: service.yml
-#   tags:
-#     - vector_service

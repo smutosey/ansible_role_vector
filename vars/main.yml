@@ -6,4 +6,3 @@ deb_architecture: {
 
 vector_user: vector
 vector_group: vector
-vector_log_output: journal
