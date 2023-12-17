@@ -1,10 +1,46 @@
 ---
-- name: Install
-  ansible.builtin.include_tasks: install.yml
-  tags:
-    - vector_install
+# - name: Install
+#   ansible.builtin.include_tasks: install.yml
+#   tags:
+#     - vector_install
 
-- name: Configure
-  ansible.builtin.include_tasks: config.yml
-  tags:
-    - vector_configure
+- name: INSTALL | Ensure group "vector" exists
+  become: true
+  become_method: su
+  ansible.builtin.group:
+    name: "{{ vector_group }}"
+    state: present
+
+- name: INSTALL | Add the user 'vector' with a bash shell, appending the group 'vector' and groups for scraping
+  become: true
+  become_method: su
+  ansible.builtin.user:
+    name: "{{ vector_user }}"
+    group: "{{ vector_group }}"
+    groups: "{{ vector_groups | default('') }}"
+    shell: /usr/sbin/nologin
+    createhome: true
+    append: true
+
+- name: INSTALL | Install distr from repo
+  ansible.builtin.include_tasks:
+    file: "{{ lookup('first_found', params) }}"
+    apply:
+      tags: [install]
+  vars:
+    params:
+      files:
+        - "install/{{ ansible_pkg_mgr }}.yml"
+        - 'empty.yml'
+  tags: [install]
+
+- name: CONFIG | Set Vector config from template
+  ansible.builtin.template:
+    src: vector.yaml.j2
+    dest: /etc/vector/vector.yaml
+    mode: '0755'
+  notify: reload vector
+
+- name: Sleep
+  ansible.builtin.pause:
+    minutes: 5

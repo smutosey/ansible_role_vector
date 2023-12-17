@@ -1,16 +1,20 @@
 ---
 - name: HANDLER | Restart vector
   become: true
-  ansible.builtin.systemd_service:
+  become_method: su
+  ansible.builtin.service:
     name: vector
     state: restarted
-    daemon_reload: true
+#     daemon_reload: true
     enabled: true
   listen: restart vector
+  register: restarted
 
 - name: HANDLER | Reload vector
   become: true
-  ansible.builtin.systemd_service:
+  become_method: su
+  ansible.builtin.service:
     name: vector
     state: reloaded
   listen: reload vector
+  when: restarted is not changed
