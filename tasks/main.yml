@@ -41,6 +41,6 @@
     mode: '0755'
   notify: reload vector
 
-- name: Sleep
-  ansible.builtin.pause:
-    minutes: 5
+# - name: Sleep
+#   ansible.builtin.pause:
+#     minutes: 5

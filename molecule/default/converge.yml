@@ -1,26 +1,19 @@
 ---
-- name: Fail if molecule group is missing
-  hosts: localhost
-  tasks:
-    - name: Print groups
-      ansible.builtin.debug:
-        msg: "{{ groups }}"
-
-    - name: Assert group existence
-      ansible.builtin.assert:
-        that: "'molecule' in groups"
-        fail_msg: |
-          molecule hosts group was not found inside inventory groups: {{ groups }}
+# - name: Fail if molecule group is missing
+#   hosts: localhost
+#   tasks:
+#     - name: Print groups
+#       ansible.builtin.debug:
+#         msg: "{{ groups }}"
+#
+#     - name: Assert group existence
+#       ansible.builtin.assert:
+#         that: "'molecule' in groups"
+#         fail_msg: |
+#           molecule hosts group was not found inside inventory groups: {{ groups }}
 
 - name: Converge
-  hosts: molecule
+  hosts: vectors
   gather_facts: true
-  tasks:
-    - name: Check uname
-      ansible.builtin.raw: uname -a
-      register: result
-      changed_when: false
-
-    - name: "Include ansible_role_vector"
-      include_role:
-        name: ansible_role_vector
+  roles:
+    - role: ansible_role_vector

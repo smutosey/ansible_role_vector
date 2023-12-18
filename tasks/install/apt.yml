@@ -1,3 +1,12 @@
+---
+# - name: APT | Install systemctl
+#   become: true
+#   become_method: su
+#   ansible.builtin.apt:
+#     name: systemd
+#     state: present
+#     update_cache: true
+
 - name: APT | Install Vector deb from a remote repo (apt)
   become: true
   become_method: su
@@ -5,4 +14,3 @@
     deb: "https://apt.vector.dev/pool/v/ve/vector_{{ vector_version }}-1_{{ deb_architecture[ansible_architecture] }}.deb"
     state: present
   notify: restart vector
-  when: ansible_pkg_mgr == "apt"

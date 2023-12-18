@@ -3,9 +3,6 @@
   gather_facts: false
   vars:
     molecule_inventory:
-      all:
-        hosts: {}
-        molecule: {}
   tasks:
     - name: Create a container
       community.docker.docker_container:
