@@ -1,11 +1,4 @@
 ---
-# - name: YUM | Install systemctl
-#   ansible.builtin.yum:
-#     name:
-#       - systemd
-#     state: latest
-#     update_cache: true
-
 - name: YUM | Install Vector rpm from a remote repo (yum)
   become: true
   become_method: su

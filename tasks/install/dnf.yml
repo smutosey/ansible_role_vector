@@ -6,40 +6,6 @@
   become: true
   become_method: su
 
-- name: DNF | Find repos
-  ansible.builtin.find:
-    paths: "/etc/yum.repos.d/"
-    patterns: "CentOS-*"
-  register: repos
-  changed_when: False
-
-- name: DNF | mirror fix one
-  ansible.builtin.replace:
-    path: "{{ item.path }}"
-    regexp: '^mirrorlist(.*)?$'
-    replace: '# mirrorlist\1'
-  loop: "{{ repos.files }}"
-  become: true
-  become_method: su
-
-- name: DNF | mirror fix two
-  ansible.builtin.replace:
-    path: "{{ item.path }}"
-    regexp: '^#baseurl=http://mirror.centos.org(.*)?$'
-    replace: 'baseurl=http://vault.centos.org\1'
-  loop: "{{ repos.files }}"
-  become: true
-  become_method: su
-
-# - name: DNF | Install systemctl
-#   ansible.builtin.dnf:
-#     name: systemd
-#     state: present
-#     update_cache: true
-#   become: true
-#   become_method: su
-#
-
 - name: DNF | Install Vector
   ansible.builtin.dnf:
     name: "https://yum.vector.dev/stable/vector-0/{{ ansible_architecture }}/vector-{{ vector_version }}-1.{{ ansible_architecture }}.rpm"

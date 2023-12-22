@@ -2,7 +2,7 @@ data_dir: "{{ vector_data_dir }}"
 
 api:
   enabled: true
-  address: "127.0.0.1:8686"
+  address: "0.0.0.0:8686"
 
 sources:
   var_logs:
@@ -12,10 +12,18 @@ sources:
     ignore_older: 86400          # 1 day
 
 sinks:
-  clickhouse:
+  debug:
+    type: console
     inputs:
-      - "var_logs"
-    type: "clickhouse"
-    endpoint: "{{ vector_endpoint_clickhouse }}"
-    database: "logs"
-    table: "{{ vector_endpoint_clickhouse_table }}"
+      - var_logs
+    encoding:
+      codec: json
+
+# sinks:
+#   clickhouse:
+#     inputs:
+#       - "var_logs"
+#     type: "clickhouse"
+#     endpoint: "{{ vector_endpoint_clickhouse }}"
+#     database: "logs"
+#     table: "{{ vector_endpoint_clickhouse_table }}"

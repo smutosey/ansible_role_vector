@@ -6,3 +6,4 @@ vector_data_dir: "/var/lib/vector"
 
 vector_endpoint_clickhouse: "localhost:8123"
 vector_endpoint_clickhouse_table: "logs"
+vector_config_template: "vector.yaml.j2"
