@@ -1,0 +1,15 @@
+---
+- name: Verify
+  hosts: vectors
+  tasks:
+    - name: Get Service Status
+      ansible.builtin.systemd:
+        name: "postgresql@13-main"
+      register: pg_service_status
+
+    - ansible.builtin.debug:
+        var: pg_service_status.status.ActiveState
+
+    - name: Check Vector API (GET /health status 200)
+      ansible.builtin.uri:
+        url: "http://0.0.0.0:8686/health"

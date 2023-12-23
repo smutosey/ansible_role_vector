@@ -1,0 +1,28 @@
+---
+# dependency:
+#   name: galaxy
+#   options:
+#     requirements-file: collections.yml
+driver:
+  name: podman
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+platforms:
+
+  - name: ubuntu
+    groups:
+      - vectors
+    image: ubuntu:latest
+    dockerfile: ./Dockerfile.j2
+    privileged: true
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    command: /sbin/init
+
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
