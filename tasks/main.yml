@@ -6,14 +6,14 @@
 
 - name: INSTALL | Ensure group "vector" exists
   become: true
-  become_method: su
+  become_method: ansible.builtin.su
   ansible.builtin.group:
     name: "{{ vector_group }}"
     state: present
 
 - name: INSTALL | Add the user 'vector' with a bash shell, appending the group 'vector' and groups for scraping
   become: true
-  become_method: su
+  become_method: ansible.builtin.su
   ansible.builtin.user:
     name: "{{ vector_user }}"
     group: "{{ vector_group }}"

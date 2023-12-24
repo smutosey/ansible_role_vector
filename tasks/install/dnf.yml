@@ -4,7 +4,7 @@
     state: present
     key: https://keys.datadoghq.com/DATADOG_RPM_KEY_CURRENT.public
   become: true
-  become_method: su
+  become_method: ansible.builtin.su
 
 - name: DNF | Install Vector
   ansible.builtin.dnf:
@@ -12,4 +12,4 @@
     state: present
   notify: restart vector
   become: true
-  become_method: su
+  become_method: ansible.builtin.su
