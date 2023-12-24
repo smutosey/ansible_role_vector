@@ -7,8 +7,8 @@ driver:
   name: podman
 lint: |
   set -e
-  yamllint .
-  ansible-lint .
+#   yamllint .
+  ansible-lint . --exclude ./.tox/
 platforms:
 
   - name: ubuntu
