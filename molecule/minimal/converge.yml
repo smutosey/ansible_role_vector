@@ -16,4 +16,4 @@
   hosts: vectors
   gather_facts: true
   roles:
-    - role: ansible_role_vector
+    - ansible_role_vector
