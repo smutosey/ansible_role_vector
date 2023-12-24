@@ -2,7 +2,7 @@
 - name: HANDLER | Restart vector
   become: true
   become_method: ansible.builtin.su
-  ansible.builtin.systemd_service:
+  ansible.builtin.service:
     name: vector
     state: restarted
     daemon_reload: true
@@ -13,7 +13,7 @@
 - name: HANDLER | Reload vector
   become: true
   become_method: ansible.builtin.su
-  ansible.builtin.systemd_service:
+  ansible.builtin.service:
     name: vector
     state: reloaded
   listen: reload vector
