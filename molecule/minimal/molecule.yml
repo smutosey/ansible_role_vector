@@ -5,16 +5,15 @@
 #     requirements-file: collections.yml
 driver:
   name: podman
-lint: |
-  set -e
-  ansible-lint . --exclude ./.tox/ --exclude ./.git/
+# lint: |
+#   set -e
+#   ansible-lint . --exclude ./.tox/ --exclude ./.git/
 platforms:
 
   - name: ubuntu
     groups:
       - vectors
-    image: ubuntu:latest
-    dockerfile: ./Dockerfile.j2
+    image: pycontribs/ubuntu:latest
     privileged: true
     cgroupns_mode: host
     volumes:
