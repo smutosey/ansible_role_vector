@@ -1,6 +1,7 @@
 selinux
-ansible-lint
+ansible-lint==5.4.0
+ansible-compat==1.0.0
 lxml
-molecule
-molecule_podman
+molecule==3.6.1
+molecule-podman==1.1.0
 jmespath
