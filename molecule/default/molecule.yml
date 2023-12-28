@@ -1,8 +1,9 @@
 ---
-# dependency:
-#   name: galaxy
-#   options:
-#     requirements-file: collections.yml
+dependency:
+  name: galaxy
+  options:
+    requirements-file: molecule/shared/collections.yml
+    role-file: molecule/shared/requirements.yml
 driver:
   name: docker
 lint: |
@@ -10,33 +11,33 @@ lint: |
   ansible-lint .
 platforms:
 
-  - name: ubuntu
+  - name: ubuntu_vector
     groups:
       - vectors
     image: ubuntu:22.04
-    dockerfile: ./Dockerfile.j2
+    dockerfile: ../resources/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /sbin/init
 
-  - name: centos_8
+  - name: centos_8_vector
     groups:
       - vectors
     image: centos:8
-    dockerfile: ./Dockerfile.j2
+    dockerfile: ../resources/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:rw
     command: /usr/sbin/init
 
-  - name: centos_7
+  - name: centos_7_vector
     groups:
       - vectors
     image: centos:7
-    dockerfile: ./Dockerfile.j2
+    dockerfile: ../resources/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
@@ -45,5 +46,8 @@ platforms:
 
 provisioner:
   name: ansible
+  playbooks:
+    converge: ../shared/converge.yml
+    verify:  ../shared/verify.yml
 verifier:
   name: ansible

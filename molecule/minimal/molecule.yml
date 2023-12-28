@@ -1,8 +1,9 @@
 ---
-# dependency:
-#   name: galaxy
-#   options:
-#     requirements-file: collections.yml
+dependency:
+  name: galaxy
+  options:
+    requirements-file: molecule/shared/collections.yml
+    role-file: molecule/shared/requirements.yml
 driver:
   name: podman
 lint: |
@@ -10,11 +11,11 @@ lint: |
   ansible-lint . --exclude ./.tox/ --exclude ./.git/
 platforms:
 
-  - name: ubuntu
+  - name: ubuntu_vector
     groups:
       - vectors
     image: ubuntu:22.04
-    dockerfile: ./Dockerfile.j2
+    dockerfile: ../resources/Dockerfile.j2
     privileged: true
     cgroupns_mode: host
     volumes:
@@ -23,5 +24,8 @@ platforms:
 
 provisioner:
   name: ansible
+  playbooks:
+    converge: ../shared/converge.yml
+    verify:  ../shared/verify.yml
 verifier:
   name: ansible

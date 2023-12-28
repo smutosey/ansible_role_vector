@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: vectors
+  gather_facts: true
+  roles:
+    - role: ansible_role_vector
+      vars:
+        role_vector_port: 8686

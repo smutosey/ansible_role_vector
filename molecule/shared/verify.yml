@@ -13,3 +13,5 @@
     - name: Check Vector API (GET /health status 200)
       ansible.builtin.uri:
         url: "http://0.0.0.0:{{ role_vector_port }}/health"
+      vars:
+        role_vector_port: 8686
