@@ -13,7 +13,7 @@ platforms:
   - name: ubuntu
     groups:
       - vectors
-    image: ubuntu:latest
+    image: ubuntu:22.04
     dockerfile: ./Dockerfile.j2
     privileged: true
     cgroupns_mode: host
