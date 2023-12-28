@@ -25,5 +25,5 @@ sinks:
 #       - "var_logs"
 #     type: "clickhouse"
 #     endpoint: "{{ vector_endpoint_clickhouse }}"
-#     database: "logs"
+#     database: "{{ vector_endpoint_clickhouse_database }}"
 #     table: "{{ vector_endpoint_clickhouse_table }}"

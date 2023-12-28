@@ -3,6 +3,7 @@
   become: true
   become_method: ansible.builtin.su
   ansible.builtin.apt:
-    deb: "https://apt.vector.dev/pool/v/ve/vector_{{ vector_version }}-1_{{ deb_architecture[ansible_architecture] }}.deb"
+    deb: "https://apt.vector.dev/pool/v/ve/vector_{{ role_vector_version }}-1_{{ deb_architecture[ansible_architecture] }}.deb"
     state: present
   notify: restart vector
+  tags: [install]
