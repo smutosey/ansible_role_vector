@@ -42,7 +42,3 @@
 - name: CONFIG | Flush handlers
   ansible.builtin.meta: flush_handlers
   tags: [configure]
-
-# - name: Sleep
-#   ansible.builtin.pause:
-#     minutes: 5

@@ -4,12 +4,12 @@
   tasks:
     - name: Get Service Status
       ansible.builtin.systemd:
-        name: "postgresql@13-main"
-      register: pg_service_status
+        name: vector
+      register: vector_service
 
     - ansible.builtin.debug:
-        var: pg_service_status.status.ActiveState
+        var: vector_service.status.ActiveState
 
     - name: Check Vector API (GET /health status 200)
       ansible.builtin.uri:
-        url: "http://0.0.0.0:8686/health"
+        url: "http://0.0.0.0:{{ role_vector_port }}/health"
