@@ -9,6 +9,7 @@
 
     - ansible.builtin.debug:
         var: vector_service.status.ActiveState
+      failed_when: vector_service.status.ActiveState != "active"
 
     - name: Check Vector API (GET /health status 200)
       ansible.builtin.uri:

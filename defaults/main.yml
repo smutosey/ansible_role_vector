@@ -1,7 +1,7 @@
 ---
 role_vector_version: "0.34.1"
 
-role_vector_groups: [sys]
+role_vector_groups: []
 role_vector_data_dir: "/var/lib/vector"
 
 role_vector_endpoint_clickhouse: "localhost:8123"
