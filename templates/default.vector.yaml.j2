@@ -5,25 +5,31 @@ api:
   address: "0.0.0.0:{{ role_vector_port }}"
 
 sources:
-  var_logs:
-    type: "file"
-    include:
-      - "/var/log/*.log"
-    ignore_older: 86400          # 1 day
+  dummy_logs:
+    type: "demo_logs"
+    format: "syslog"
+    interval: 1
 
-sinks:
-  debug:
-    type: console
-    inputs:
-      - var_logs
-    encoding:
-      codec: json
+transforms:
+  parse_logs:
+    type: "remap"
+    inputs: ["dummy_logs"]
+    source: |
+      . = parse_syslog!(string!(.message))
 
 # sinks:
-#   clickhouse:
+#   print:
+#     type: "console"
 #     inputs:
-#       - "var_logs"
-#     type: "clickhouse"
-#     endpoint: "{{ role_vector_endpoint_clickhouse }}"
-#     database: "{{ role_vector_endpoint_clickhouse_database }}"
-#     table: "{{ role_vector_endpoint_clickhouse_table }}"
+#       - parse_logs
+#     encoding:
+#       codec: "json"
+
+sinks:
+  clickhouse:
+    inputs:
+      - "var_logs"
+    type: "clickhouse"
+    endpoint: "{{ role_vector_endpoint_clickhouse }}"
+    database: "{{ role_vector_endpoint_clickhouse_database }}"
+    table: "{{ role_vector_endpoint_clickhouse_table }}"
