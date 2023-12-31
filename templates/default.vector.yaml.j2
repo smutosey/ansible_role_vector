@@ -5,25 +5,19 @@ api:
   address: "0.0.0.0:{{ role_vector_port }}"
 
 sources:
-  dummy_logs:
-    type: "demo_logs"
-    format: "syslog"
-    interval: 1
-
-transforms:
-  parse_logs:
-    type: "remap"
-    inputs: ["dummy_logs"]
-    source: |
-      . = parse_syslog!(string!(.message))
+  var_logs:
+    type: "file"
+    include:
+      - "/var/log/nginx/*.log"
+    ignore_older: 20          # 1 day
 
 # sinks:
-#   print:
-#     type: "console"
+#   debug:
+#     type: console
 #     inputs:
-#       - parse_logs
+#       - var_logs
 #     encoding:
-#       codec: "json"
+#       codec: json
 
 sinks:
   clickhouse:
@@ -33,3 +27,4 @@ sinks:
     endpoint: "{{ role_vector_endpoint_clickhouse }}"
     database: "{{ role_vector_endpoint_clickhouse_database }}"
     table: "{{ role_vector_endpoint_clickhouse_table }}"
+    skip_unknown_fields: true
