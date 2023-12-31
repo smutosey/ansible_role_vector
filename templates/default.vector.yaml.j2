@@ -11,20 +11,10 @@ sources:
       - "/var/log/nginx/*.log"
     ignore_older: 20          # 1 day
 
-# sinks:
-#   debug:
-#     type: console
-#     inputs:
-#       - var_logs
-#     encoding:
-#       codec: json
-
 sinks:
-  clickhouse:
+  debug:
+    type: console
     inputs:
-      - "var_logs"
-    type: "clickhouse"
-    endpoint: "{{ role_vector_endpoint_clickhouse }}"
-    database: "{{ role_vector_endpoint_clickhouse_database }}"
-    table: "{{ role_vector_endpoint_clickhouse_table }}"
-    skip_unknown_fields: true
+      - var_logs
+    encoding:
+      codec: json

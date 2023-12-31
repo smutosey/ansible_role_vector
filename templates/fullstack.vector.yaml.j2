@@ -1,0 +1,22 @@
+data_dir: "{{ role_vector_data_dir }}"
+
+api:
+  enabled: true
+  address: "0.0.0.0:{{ role_vector_port }}"
+
+sources:
+  var_logs:
+    type: "file"
+    include:
+      - "/var/log/nginx/*.log"
+    ignore_older: 20          # 1 day
+
+sinks:
+  clickhouse:
+    inputs:
+      - "var_logs"
+    type: "clickhouse"
+    endpoint: "{{ role_vector_endpoint_clickhouse }}"
+    database: "{{ role_vector_endpoint_clickhouse_database }}"
+    table: "{{ role_vector_endpoint_clickhouse_table }}"
+    skip_unknown_fields: true
